@@ -52,25 +52,12 @@ class EmployeeController extends Controller
    // Generate Report PDF
    public function generatePdf()
    { 
-    // $allData=Employee::orderBy('id', 'DESC')->get();
-    // $mpdf = new \Mpdf\Mpdf([
-    //     'default_font' => 'ayar',
-    //     'mode' => 'utf-8',
-    //     'tempDir' => storage_path('temp')
-    // ]);
-    // $mpdf->allow_charset_conversion = true;
-    // $mpdf->autoScriptToLang = true;
-    // $mpdf->autoLangToFont = true;
-    // $mpdf->WriteHTML($allData);
-    // $mpdf->Output();
 
     $employeeList=Employee::orderBy('id', 'DESC')->get();
-    // return  $employeeList;
-      $inTime='10:00';
-       $pdf = PDF::loadView('employeePDF',compact('employeeList','inTime'));
+   $pdf = PDF::loadView('employeePDF',compact('employeeList'));
     //    return $this->output($pdf);
   
-       return $pdf->stream();
+   return $pdf->stream();
 
     // $mpdf = new \Mpdf\Mpdf([
     //     'default_font' => 'ayar',

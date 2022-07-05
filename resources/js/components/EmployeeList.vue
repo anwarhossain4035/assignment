@@ -8,12 +8,12 @@
   </div>
 </form>
 <div class="input-group">
-
   <form  @submit.prevent="dataFilter">
-    <input type="search" class="form-control rounded" placeholder="Search" v-model="form.search"  />
-    <button type="submit" class="btn btn-outline-primary">Filter</button>
+    <input type="search" class="form-control rounded" placeholder="Search By ID" v-model="form.search"  />
+    <button type="submit" class="btn btn-outline-primary">Filter By Only ID</button>
   </form>
 </div>
+        <button type="button" @click="genaratePDF" target="_blank" class="btn btn-warning float-right ml-2">PDF Generate</button>
         <h2 class="text-center">Employee Information</h2>
  
         <table class="table">
@@ -90,7 +90,7 @@
             genaratePDF(){
               this.axios.get('http://127.0.0.1:8000/api/pdf')
                 .then(res => {
-                    console.log(res);
+                    this.employeeLists = res.data;
                 })
            } ,
 
