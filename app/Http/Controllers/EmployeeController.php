@@ -8,7 +8,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Mpdf\Mpdf;
 
 class EmployeeController extends Controller
 {
@@ -19,7 +19,7 @@ class EmployeeController extends Controller
         $file = $request->file('file');
         Excel::import(new UsersImport, $file);
     }
-    
+
     return response()->json([
         'message' => 'Done',
         'Data'  => $request->dummy,
@@ -27,7 +27,7 @@ class EmployeeController extends Controller
     ],201);
    }
 
-   // Get All Employee Data 
+   // Get All Employee Data
 
    public function employeeList(Request $request){
 
@@ -49,17 +49,25 @@ class EmployeeController extends Controller
 
    // Generate Report PDF
    public function generatePdf()
-   { 
-        $mpdf = new \Mpdf\Mpdf([
-         'default_font' => 'ayar',
-         'mode' => 'utf-8',
-         'tempDir' => storage_path('temp')
-     ]);
-     $mpdf->allow_charset_conversion = true;
-     $mpdf->autoScriptToLang = true;
-     $mpdf->autoLangToFont = true;
-     $mpdf->WriteHTML('<h1>অনলাইনে Google ইনপুট সরঞ্জামগুলি ব্যবহার করে দেখুন</h1>');
-     $mpdf->Output();
+   {
+    $mpdf = new Mpdf([
+        'default_font' => 'ayar',
+        'mode' => 'utf-8',
+        'tempDir' => storage_path('temp')
+    ]);
+    $mpdf->allow_charset_conversion = true;
+    $mpdf->autoScriptToLang = true;
+    $mpdf->autoLangToFont = true;
+    $html="fkslfjsdkfjdsd"
+    // $mpdf->WriteHTML($html);
+
+    // $mpdf->Output();
+     ;
+    //  $mpdf->WriteHTML('<h1>অনলাইনে Google ইনপুট সরঞ্জামগুলি ব্যবহার করে দেখুন</h1>');
+    //  $data=$mpdf->Output();
+    // return response()->json($data);
+     $html = view('employeePDF',compact('html'));
+     return $mpdf->output($html);
 
 
    }

@@ -15,8 +15,8 @@
 </div>
         <button type="button" @click="genaratePDF" target="_blank" class="btn btn-warning float-right ml-2">PDF Generate</button>
         <h2 class="text-center">Employee Information</h2>
- 
-        <table class="table" ref="testHTML" >
+
+        <table class="table" id="pdf" >
             <thead>
             <tr>
                 <th>Month</th>
@@ -31,7 +31,7 @@
             </tr>
             </thead>
             <tbody>
-    
+
             <tr v-for="employee in employeeLists" :key="employee.id">
                 <td>{{employee.month}}</td>
                 <td>{{employee.date}}</td>
@@ -47,37 +47,38 @@
                  </span>
 
                  <td >{{employee.first_in_time}}  </td>
-           
+
                 <td>{{employee.hours_of_work}}</td>
             </tr>
             </tbody>
         </table>
     </div>
 </template>
- 
+
 <script>
+import html2canvas from 'html2canvas'
 import { jsPDF } from "jspdf";
     export default {
         data() {
             return {
                 employeeLists: [],
                  time:'10:00',
-                
+
                 form: {
                     dummy: 'Test text',
-                    file:'', 
+                    file:'',
                     search:'',
                 }
-               
-            
+
+
 
             }
-            
+
         },
-  
+
         methods: {
 
-      
+
 // Get all Data and filter funcation
 
              dataFilter(){
@@ -90,17 +91,24 @@ import { jsPDF } from "jspdf";
 
 //  PDF Genarate Funcation
             genaratePDF(){
-              this.axios.get('/api/pdf')
-                .then(res => {
-                    console.log(res.data);
-                    this.employeeLists = res.data;
-                })
+              window.html2canvas=html2canvas;
+              var doc=new jsPDF('p','pt','a4');
+              doc.html(document.querySelector('#pdf'),{
+                callback:function(pdf){
+                 pdf.save("employee.pdf");
+                }
+              })
+            //   this.axios.get('/api/pdf')
+            //     .then(res => {
+            //         console.log(res.data);
+            //         this.employeeLists = res.data;
+            //     })
            } ,
 
 
   // file handle funcation
         handleFile(event) {
-            this.form.file = event.target.files[0];   
+            this.form.file = event.target.files[0];
         },
 
         // Upload XL file from local
@@ -113,18 +121,18 @@ import { jsPDF } from "jspdf";
                    icon: "success",
                    title: "Upload successfully",
                   });
-            
+
                     this.dataFilter();
                 })
             } ,
 
-         
+
         },
         computed:{
         },
            created(){
             this.dataFilter();
         }
-     
+
     }
 </script>
