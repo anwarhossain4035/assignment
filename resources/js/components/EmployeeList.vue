@@ -16,7 +16,7 @@
         <button type="button" @click="genaratePDF" target="_blank" class="btn btn-warning float-right ml-2">PDF Generate</button>
         <h2 class="text-center">Employee Information</h2>
  
-        <table class="table">
+        <table class="table" ref="testHTML" >
             <thead>
             <tr>
                 <th>Month</th>
@@ -32,7 +32,7 @@
             </thead>
             <tbody>
     
-            <tr v-for="employee in employeeLists">
+            <tr v-for="employee in employeeLists" :key="employee.id">
                 <td>{{employee.month}}</td>
                 <td>{{employee.date}}</td>
                 <td>{{employee.day}}</td>
@@ -56,6 +56,7 @@
 </template>
  
 <script>
+import { jsPDF } from "jspdf";
     export default {
         data() {
             return {
@@ -80,16 +81,18 @@
 // Get all Data and filter funcation
 
              dataFilter(){
-              this.axios.post('http://localhost:8000/api/filter', this.form)
+              this.axios.post('/api/filter', this.form)
                 .then(res => {
                     this.employeeLists = res.data;
+                    console.log(this.employeeLists);
                 })
            } ,
 
- // PDF Genarate Funcation
+//  PDF Genarate Funcation
             genaratePDF(){
-              this.axios.get('http://127.0.0.1:8000/api/pdf')
+              this.axios.get('/api/pdf')
                 .then(res => {
+                    console.log(res.data);
                     this.employeeLists = res.data;
                 })
            } ,
@@ -104,13 +107,20 @@
              uploadXlFile() {
                 let data = new FormData();
                 data.append('file', this.form.file)
-                axios.post('http://localhost:8000/api/upload', data)
+                axios.post('/api/upload', data)
                 .then(res => {
+                   Toast.fire({
+                   icon: "success",
+                   title: "Upload successfully",
+                  });
+            
                     this.dataFilter();
                 })
             } ,
 
          
+        },
+        computed:{
         },
            created(){
             this.dataFilter();

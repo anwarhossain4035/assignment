@@ -21,41 +21,7 @@
             </tr>
         </thead>
         <tbody>
-        @foreach ($employeeList as $employee )
-            @if ($employee->first_in_time > $inTime)
-            <tr style="background-color: red; color:#e2e8f0">
-                <td>{{$employee->month}}</td>
-                <td>{{$employee->date}}</td>
-                <td>{{$employee->day}}</td>
-                <td>{{$employee->employee_id}}</td>
-                <td>{{$employee->employee_name}}</td>
-                <td>{{$employee->department}}</td>
-              
-                <td >{{$employee->first_in_time}}  </td>
 
-                <td> {{$employee->last_out_time}} </td>
-              
-                <td>{{$employee->hours_of_work}}</td>
-            </tr>
-            @else
-            <tr style="background-color: Yellow;">
-                <td>{{$employee->month}}</td>
-                <td>{{$employee->date}}</td>
-                <td>{{$employee->day}}</td>
-                <td>{{$employee->employee_id}}</td>
-                <td>{{$employee->employee_name}}</td>
-                <td>{{$employee->department}}</td>
-              
-                <td >{{$employee->first_in_time}}  </td>
-
-                <td> {{$employee->last_out_time}} </td>
-              
-                <td>{{$employee->hours_of_work}}</td>
-            </tr>
-            @endif
-           
-            @endforeach
-          
   
         </tbody>
 

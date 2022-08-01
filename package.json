@@ -17,9 +17,12 @@
         "vue-loader": "^16.8.3"
     },
     "dependencies": {
+        "jspdf": "^2.5.1",
+        "sweetalert2": "^11.4.24",
         "vue": "^3.2.37",
         "vue-axios": "^3.4.1",
         "vue-router": "^4.0.16",
+        "vue-sweetalert2": "^5.0.5",
         "vue3-form": "^1.2.0"
     }
 }

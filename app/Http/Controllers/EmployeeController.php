@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Imports\EmployeeBulkImport;
 use App\Imports\UsersImport;
 use App\Models\Employee;
-// use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Facades\Excel;
 
-use PDF;
 
 class EmployeeController extends Controller
 {
@@ -52,23 +50,16 @@ class EmployeeController extends Controller
    // Generate Report PDF
    public function generatePdf()
    { 
-
-    $employeeList=Employee::orderBy('id', 'DESC')->get();
-   $pdf = PDF::loadView('employeePDF',compact('employeeList'));
-    //    return $this->output($pdf);
-  
-   return $pdf->stream();
-
-    // $mpdf = new \Mpdf\Mpdf([
-    //     'default_font' => 'ayar',
-    //     'mode' => 'utf-8',
-    //     'tempDir' => storage_path('temp')
-    // ]);
-    // $mpdf->allow_charset_conversion = true;
-    // $mpdf->autoScriptToLang = true;
-    // $mpdf->autoLangToFont = true;
-    // $mpdf->WriteHTML($employeeList);
-    // $mpdf->Output();
+        $mpdf = new \Mpdf\Mpdf([
+         'default_font' => 'ayar',
+         'mode' => 'utf-8',
+         'tempDir' => storage_path('temp')
+     ]);
+     $mpdf->allow_charset_conversion = true;
+     $mpdf->autoScriptToLang = true;
+     $mpdf->autoLangToFont = true;
+     $mpdf->WriteHTML('<h1>অনলাইনে Google ইনপুট সরঞ্জামগুলি ব্যবহার করে দেখুন</h1>');
+     $mpdf->Output();
 
 
    }
